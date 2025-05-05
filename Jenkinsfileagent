@@ -1,0 +1,29 @@
+//agent any meaning agent any run on any node.
+pipeline{
+    agent any
+    stages{
+        stage('checkout'){
+            steps{
+                echo "This is my first pipeline"
+                sleep 6
+            }
+        }
+
+    
+    
+        stage('build'){
+            steps{
+                echo "this is my second pipeline"
+                sleep 6
+            }
+        }
+        stage('excute'){
+            steps{
+                echo "excuting pipeline"
+                sleep 6
+            }
+        }
+    }
+
+    
+}

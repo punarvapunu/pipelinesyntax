@@ -1,0 +1,13 @@
+pipeline{
+    stages{
+        stage('Checkout'){
+            steps{
+                 echo "punarva"
+                checkout scmGit(branches: [[name: '*/main']],
+                 extensions: [], 
+                userRemoteConfigs: [[credentialsId: 'github_my', url: 'https://github.com/punarvapunu/Gitpractice1.git']])
+            }
+        }
+        
+    }
+}

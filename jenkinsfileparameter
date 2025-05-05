@@ -1,0 +1,53 @@
+pipeline{
+    agent any
+    
+    parameters {
+        booleanParam(name: 'BUILD', defaultValue: true, description: 'Do you want to build ?')
+        string(name: 'BRANCH_NAME', defaultValue: 'main', description: 'Enter the branch name to deploy ?')
+        choice(name: 'ENV_DEPLOY', choices: ['test','qa','stagging','prod'], description: 'Choose the environment to deploy ?')
+        // credentials (credentialType: 'githubcredentials', 
+        // defaultValue: 'github_my', description: 'fetching the github credentials', 
+        // name: 'Punarva', required: false)
+        password (defaultValue: 'punu291997', description: 'this is my credential', name: 'Punarva')
+         text (defaultValue: 'preproduction', description: 'production', name: 'deployment')
+         string(name: 'FILE_PATH', defaultValue: '/default/path/to/file.txt', description: 'Enter the file path')
+        
+    }
+    environment {
+
+        branch='testing'
+        repo='punarvapunu'
+    }
+
+    stages{
+        stage('Checkout'){
+            steps{
+                echo "GROOVY  syntax  is ${params.BRANCH_NAME}"
+                echo " IN SCRIPTED  $BRANCH_NAME"
+                echo "In enviroment variable ----${env.branch}"
+                echo "In enviroment variable ----${env.repo}"
+            }
+        }
+        stage('Build'){
+            steps{
+                echo "GROOVY  syntax  is ${params.BUILD} "
+                echo "Scripted $BUILD"
+                echo "GROOVY FOR PASSSWORD  ${params.Punarva}"
+                
+
+            }
+        }
+        stage('excute'){
+            steps{
+                echo "GROOVY ----> ENV_DEPLOY: ${params.ENV_DEPLOY}" 
+                echo "GROOVY FOR MULTI STRING ${params.deployment}"
+                echo "Using file path: ${params.FILE_PATH}"
+                
+                 // Example: read the file
+                //sh "cat ${params.FILE_PATH}"
+                
+            }
+            
+    }
+    }
+}

@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+
+    environment {
+        APP = 'frontend'
+        ENV = 'prod'
+    }
+
+    stages {
+        stage('CHECK') {
+            steps {
+                sh 'env' // Displays the environment variables
+            }
+        }
+
+        stage('checkout') {
+            steps {
+                echo "GROOVY -----------------> APP_TYPE: ${APP} TARGET_ENV: ${ENV}" //--------> this is decarlative pipeline echo
+                
+                script {
+                    echo "SCRIPTED -----------------> APP_TYPE: ${env.APP} TARGET_ENV: ${env.ENV}"
+                }
+
+                
+                sh '''
+                    echo "SHELL --------------> APP_TYPE: $APP TARGET_ENV: $ENV" 
+                '''
+                //----> This is  scripted pipeline echo
+                
+            }
+        }
+
+        stage('build') {
+            steps {
+                
+                echo "GROOVY -----------------> APP_TYPE: ${APP} TARGET_ENV: ${ENV}"
+                script {
+                    echo "scripted ---------APP_TYPE: ${env.APP} TARGET_ENV: ${env.ENV}"
+                }
+                
+                sh '''
+                    echo "SHELL --------------> APP_TYPE: $APP TARGET_ENV: $ENV"
+
+                '''
+            }
+        }
+    }
+}

@@ -1,0 +1,32 @@
+
+//agent any means by using the round robin algorithm uses any worker node which has large gb ram 
+// and highest configuration node or free
+//  to excute.
+pipeline{
+    agent none
+    stages{
+        stage('Checkout'){
+            agent{
+                label 'slave2'
+            }
+            steps{
+                echo "This is my first jenkins job"
+            }
+        }
+        stage('Build'){
+            agent{
+                label 'slave1'
+            }
+            steps{
+                echo "this is my second pipeline job"
+            }
+        }
+        stage('Excute'){
+            agent any
+            steps{
+                echo "This is my third job"
+            }
+        }
+    }
+
+}

@@ -1,0 +1,27 @@
+//running the pipeline linear version as aparallel on eby on eseen in blue ocean.
+pipeline{
+    agent any
+    stages{
+        stage('Test1'){
+            steps{
+                echo "This is test1 job"
+            }
+        }
+        stage('Test2'){
+            steps{
+                echo "This is test2 job."
+            }
+        }
+        stage('Test3'){
+            steps{
+                echo "This is test3 job"
+            }
+        }
+        stage('Test4'){
+            steps{
+                echo "This is test4 job"
+            }
+        }
+    }
+    
+}

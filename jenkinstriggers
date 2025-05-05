@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+
+    triggers {
+        pollSCM('* * * * *')
+        upstream(
+            upstreamProjects: 'myjobtri',
+            threshold: hudson.model.Result.SUCCESS
+        )
+        cron('H/5 * * * *')
+    }
+
+    options {
+        timeout(time: 1, unit: 'MINUTES')
+        buildDiscarder(logRotator(numToKeepStr: '1',daysToKeepStr: '2'))
+        disableConcurrentBuilds() //disable paralel builds
+        
+    }
+
+    stages {
+        stage('checkout') {
+            steps {
+                echo "Git repository"
+                checkout scmGit(
+                    branches: [[name: '*/main']],
+                    extensions: [],
+                    userRemoteConfigs: [[
+                        credentialsId: 'github_my',
+                        url: 'https://github.com/punarvapunu/jenkins_pipiline.git'
+                    ]]
+                )
+                sh '''
+                    ls -lrt
+                    sleep 20
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline succeeded!'
+        }
+        failure {
+            echo 'Pipeline failed!'
+        }
+    }
+}

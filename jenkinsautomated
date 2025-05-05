@@ -1,0 +1,55 @@
+pipeline {
+    agent any
+
+    environment {
+        GIT_REPO = 'https://github.com/punarvapunu/jenkins_pipiline.git'
+        GIT_BRANCH = 'main' 
+        GIT_CREDENTIALS_ID = 'github_my' 
+    }
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git branch: "${env.GIT_BRANCH}",
+                    url: "${env.GIT_REPO}",
+                    credentialsId: "${env.GIT_CREDENTIALS_ID}"
+            }
+        }
+
+        stage('Modify Jenkinsfile') {
+            steps {
+                script {
+                    
+                    sh '''
+                    echo "// Auto update at $(date)" >> file
+                    '''
+                }
+            }
+        }
+
+        stage('Commit and Push Changes') {
+            steps {
+                script {
+                    sh '''
+                    git config user.name "punarvapunu"
+                    git config user.email "punarvapunu1997@gmail.com"
+
+                    git add file
+                    git commit -m "Automated update to file"
+                    git push origin ${GIT_BRANCH}
+                    
+                    '''
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "Jenkinsfile updated and changes pushed successfully."
+        }
+        failure {
+            echo "Failed to update Jenkinsfile."
+        }
+    }
+}

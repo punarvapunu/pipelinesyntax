@@ -1,0 +1,28 @@
+//Running the pipeline job in parallel version 
+pipeline{
+    agent any
+
+    
+    stages{
+        
+        
+        stage('Parallel excuting jobs'){
+            
+            parallel{
+                stage('job1'){
+                    steps{
+                echo " job1 is excuting "
+                    }
+                }
+                stage('job2'){
+                    steps{
+                echo "job2 is excuting"
+                  }
+
+                }
+        }
+        
+    }
+}
+
+}

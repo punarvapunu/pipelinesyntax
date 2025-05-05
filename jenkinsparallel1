@@ -1,0 +1,43 @@
+//Running the pipeline job in parallel version 
+pipeline{
+    agent any
+    stages{
+        stage('Checkout'){
+            steps{
+                echo "This is test1 job"
+            }
+        }
+        stage('Build'){
+            steps{
+                echo "This is test2 job."
+            }
+        }
+        stage('Parallel testing'){
+            parallel{
+                stage('Test3'){
+                    steps{
+                echo "This is test3 job"
+                    }
+                }
+                stage('Test4'){
+                    steps{
+                echo "This is test4 job"
+                  }
+
+                }
+        }
+        
+    }
+}
+post {
+            success{
+                echo "successfully excuted"
+            }
+            failure{
+                echo "Failure"
+            }
+            always{
+                cleanWs()
+            }
+        }
+}

@@ -1,0 +1,37 @@
+//Agent label given the slave2 which was in mentioned in worker2 node so job is run on worker2
+
+pipeline{
+    agent{
+        label 'slave2'
+    }
+    stages{
+        stage('Checkout'){
+            steps{
+                echo "this is my first pipeline"
+            }
+        }
+        stage('build'){
+            steps{
+                echo "this is my second pipeline."
+            }
+
+        }
+        stage('excute'){
+            steps{
+                echo "This is my 3 rd pipiline"
+            }
+        }
+        
+    }
+    post {
+            success{
+                echo "successfully excuted"
+            }
+            failure{
+                echo "Failure"
+            }
+            always{
+                cleanWs()
+            }
+        }
+}

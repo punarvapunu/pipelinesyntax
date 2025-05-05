@@ -1,0 +1,32 @@
+//i define agent in stages 1  as slave1 and stage 2 as slave2 so stage 1 job will run  on worker 1 and stage 2 job will run on worker2  
+pipeline{
+    agent none
+    stages{
+        stage('Checkout'){
+            agent{
+                label 'slave1'
+            }
+            steps{
+                echo "this is my first pipeline"
+            }
+        }
+        stage('build'){
+            agent{
+                label 'slave2'
+            }
+            steps{
+                
+                echo "this is my second pipeline."
+            }
+
+        }
+        // stage('excute'){
+        //     agent{
+        //         label 'slave2'
+        //     }
+        //     steps{
+        //         echo "This is my 3 rd pipiline"
+        //     }
+        // }
+    }
+}

@@ -1,0 +1,57 @@
+pipeline{
+    agent any
+    parameters {
+        booleanParam(name: 'BUILD', defaultValue: true, description: 'Do you want to build ?')
+        string(name: 'BRANCH_NAME', defaultValue: 'main', description: 'Enter the branch name to deploy ?')
+    }
+
+    stages{
+        stage('checkout'){
+            steps{
+                checkout scmGit(branches: [[name: '*/main']], 
+                extensions: [], 
+                userRemoteConfigs: [[credentialsId: 'github_my', url: 'https://github.com/punarvapunu/jenkins_pipiline.git']])
+                echo "Git checkout from repo"
+            }
+        }
+        stage('build'){
+            when{
+                    branch 'main' //--------------> branch already jenkins had written
+                }
+            steps{
+                
+                echo "build for deployment"
+                echo "GROOVY  syntax  is ${params.BUILD} "
+                 echo "GROOVY  syntax  is ${params.BRANCH_NAME}"
+            }
+        }
+        stage('check checkout'){
+            steps{
+                sh '''
+                   pwd
+                   ls -lrt
+                   git branch
+
+                '''
+            }
+        }
+        stage('CHECKOUT 2'){
+            steps{
+                // checkout scmGit(branches: [[name: '*/main']], 
+                // extensions: [], userRemoteConfigs: [[credentialsId: 'github_my',
+                // url: 'https://github.com/punarvapunu/Gitpractice1.git']])
+                echo "we can use any of this"
+                git branch: 'main', 
+                credentialsId: 'github_my',
+                 url: 'https://github.com/punarvapunu/Gitpractice1.git'
+                sh '''
+                   pwd
+                   ls -lrt
+                   git branch
+
+                '''
+                
+            }
+        }
+    }
+}

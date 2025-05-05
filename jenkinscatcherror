@@ -1,0 +1,28 @@
+pipeline{
+    agent any
+    stages{
+        stage('Checkout'){
+            steps{
+                echo "Defining the Exception"
+                catchError(stageResult: 'SUCCESS', buildResult: 'SUCCESS') {
+                    
+                 sh 'exit 1'
+
+                
+
+                }
+                
+            }
+        }
+        stage('TEST'){
+            steps{
+                echo"Excuting the test job"
+            }
+        }
+        stage('Excute'){
+            steps{
+                echo "Excuting the job"
+            }
+        }
+    }
+}

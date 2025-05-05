@@ -1,0 +1,25 @@
+
+pipeline {
+    agent any
+
+    environment {
+        MY_VAR = "InitialValue"
+    }
+
+    stages {
+        stage('Print Original') {
+            steps {
+                echo "MY_VAR = ${env.MY_VAR}"
+            }
+        }
+
+        stage('Override in Script') {
+            steps {
+                script {
+                    env.MY_VAR = "OverriddenValue"
+                }
+                echo "MY_VAR after override = ${env.MY_VAR}"
+            }
+        }
+    }
+}
