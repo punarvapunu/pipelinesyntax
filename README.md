@@ -1,2 +1,2 @@
 # jenkins_pipiline
- editing jenkins pipeline jobs
+ editing jenkins pipeline jobs.
